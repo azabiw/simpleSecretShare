@@ -2,9 +2,12 @@ const express = require('express')
 const fs = require('fs');
 const app = express();
 const path = require('path');
-const TEMP_PASSWORD = "asd";
-const FILE_PATH = path.basename("dummy_secret.txt", "");
 
+const config = require("./sampleConfig.js").config;
+console.log(config);
+
+const password = config.password;
+const filePath = path.basename(config.files[0]); 
 //TODO LOG INJEKTIOLTA yms suojautuminen
 
 app.get('/', function (req, res) {
@@ -16,18 +19,17 @@ app.get("/vault/:key", (req, res) => {
     const requestKey = req.params.key;
     console.log(`ATTEMT | Request with key ${requestKey}`);
 
-    if (requestKey === TEMP_PASSWORD) {
+    if (requestKey === password) {
         console.log(`SUCCESS | Succesfull request with key ${requestKey}`);
 
 
-        fs.readFile(FILE_PATH, (err, data) => {
+        fs.readFile(filePath, (err, data) => {
             if (err) {
                 console.error(err);
                 res.send("File read failed");
-                break;
             }
             console.log("INFO | reading file");
-            res.send(data);
+            res.send(""+ data);
 
           });
 
