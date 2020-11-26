@@ -10,6 +10,11 @@ const password = config.password;
 const filePath = path.basename(config.files[0]); 
 //TODO LOG INJEKTIOLTA yms suojautuminen
 
+if (password === undefined || filePath === undefined) {
+    console.error("ERROR | Failed loading the config object\n stopping process");
+    process.exit(1);
+}
+
 app.get('/', function (req, res) {
   res.send('Main page');
 })
@@ -39,4 +44,4 @@ app.get("/vault/:key", (req, res) => {
         res.sendStatus(403);
     }
 });
-app.listen(3000)
+app.listen(config.port ? config.port : 3000);
