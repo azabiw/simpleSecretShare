@@ -1,0 +1,7 @@
+html
+  head
+    title= "File listing"
+  body
+    each elem in files
+        li 
+          a(href=`/vault/${key}/${elem}`)= elem
